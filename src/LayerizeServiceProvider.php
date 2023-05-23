@@ -5,7 +5,7 @@ namespace DeyanArdi\LaravelLayerize;
 use Illuminate\Support\ServiceProvider;
 use DeyanArdi\LaravelLayerize\Commands\CreateServiceCommand;
 
-class LaravelLayerizeServiceProvider extends ServiceProvider
+class LayerizeServiceProvider extends ServiceProvider
 {
     public function boot()
     {
