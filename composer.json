@@ -1,0 +1,41 @@
+{
+    "name": "deyan-ardi/laravel-layerize",
+    "description": "Package to implement Layerize Architecture in Laravel",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "DeyanArdi\\LaravelLayerize\\": "src/"
+        }
+    },
+    "keywords": [
+        "deyan",
+        "deyan-ardi",
+        "ganadev",
+        "laravel-layerize",
+        "layer architecture",
+        "laravel"
+    ],
+    "config": {
+        "sort-packages": true
+    },
+    "authors": [
+        {
+            "name": "deyan-ardi",
+            "email": "riyan.clsg11@gmail.com",
+            "homepage": "https://ganadev.com",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.3|7.4|^8.0|^8.1|^8.2"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "DeyanArdi\\LaravelLayerize\\LaravelLayerizeServiceProvider"
+            ]
+        }
+    }
+}
