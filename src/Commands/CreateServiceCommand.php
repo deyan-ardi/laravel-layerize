@@ -2,69 +2,61 @@
 
 namespace DeyanArdi\LaravelLayerize\Commands;
 
+use DeyanArdi\LaravelLayerize\Core\HandleCreateService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 
 class CreateServiceCommand extends Command
 {
-    protected $signature = 'layerize:service {serviceName}';
+    protected $signature = 'layerize:service {serviceName} {--a|a : Create all service file include QueryService, DatatableService, CommandService}';
 
-    protected $description = 'Create a new service';
+    protected $description = 'Create a new service file for Persistance Layer';
 
     public function handle()
     {
         $serviceName = $this->argument('serviceName');
 
-        $serviceFolderPath = app_path('Service');
+        $serviceFolderPath = app_path('Services');
+        $handleCreateService = new HandleCreateService();
         if (!File::isDirectory($serviceFolderPath)) {
             File::makeDirectory($serviceFolderPath);
+            $generate =  $handleCreateService->createServicesFile($serviceFolderPath);
+            $this->line('');
+            $this->line(sprintf('<bg=blue;fg=black>%s</>', ' INFO ') . ' ' . $generate);
+            $this->line('');
         }
 
-        $servicePath = $serviceFolderPath . '/' . $serviceName;
-        File::makeDirectory($servicePath);
+        if (!$this->option('a')) {
+            $servicePath = $handleCreateService->getServicePath($serviceFolderPath, $serviceName);
 
-        $this->createServiceFiles($servicePath, $serviceName);
-    }
+            if (File::exists($servicePath)) {
+                $this->line('');
+                $this->line(sprintf('<bg=red;fg=black>%s</>', ' ERROR ') . ' ' . "File Service '{$serviceName}Service.php' already exists");
+                $this->line('');
+                return;
+            }
 
-    protected function createServiceFiles($servicePath, $serviceName)
-    {
-        $queryServiceContent = <<<EOD
-        <?php
-
-        namespace App\Service\\$serviceName;
-
-        class ${serviceName}QueryService
-        {
-            // Your code here
+            $generate = $handleCreateService->createSingleServices($servicePath, $serviceName);
+            $this->line('');
+            $this->line(sprintf('<bg=blue;fg=black>%s</>', ' INFO ') . ' ' . $generate);
+            $this->line('');
         }
-        EOD;
 
-        $commandServiceContent = <<<EOD
-        <?php
+        if ($this->option('a')) {
+            $servicePath = $serviceFolderPath . '/' . $serviceName;
+            if (File::exists($servicePath)) {
+                $this->line('');
+                $this->line(sprintf('<bg=red;fg=black>%s</>', ' ERROR ') . ' ' . "Service '{$serviceName}' already exists.");
+                $this->line('');
+                return;
+            }
 
-        namespace App\Service\\$serviceName;
+            File::makeDirectory($servicePath);
 
-        class ${serviceName}CommandService
-        {
-            // Your code here
+            $generate = $handleCreateService->createAllServices($servicePath, $serviceName);
+            $this->line('');
+            $this->line(sprintf('<bg=blue;fg=black>%s</>', ' INFO ') . ' ' . $generate);
+            $this->line('');
         }
-        EOD;
-
-        $datatableServiceContent = <<<EOD
-        <?php
-
-        namespace App\Service\\$serviceName;
-
-        class ${serviceName}DatatableService
-        {
-            // Your code here
-        }
-        EOD;
-
-        File::put($servicePath . '/' . $serviceName . 'QueryService.php', $queryServiceContent);
-        File::put($servicePath . '/' . $serviceName . 'CommandService.php', $commandServiceContent);
-        File::put($servicePath . '/' . $serviceName . 'DatatableService.php', $datatableServiceContent);
-
-        $this->info('Service created successfully.');
     }
 }
