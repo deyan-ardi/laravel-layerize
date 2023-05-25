@@ -4,7 +4,7 @@ Thanks for your interest in contributing to the Laravel Layerize project! We rea
 
 ## Submission of Pull Requests
 
-1. Make sure you have followed the steps in [README.md](https://github.com/deyan-ardi/laravel-layerize/blob/main/README.md) to setup and run Laravel Layerize project locally .
+1. Make sure you have followed the steps in [README.md](https://github.com/deyan-ardi/laravel-layerize/blob/master/README.md) to setup and run Laravel Layerize project locally .
 2. Create a new branch with a clear description of the features, fixes, or changes you'd like to contribute.
 3. Make necessary changes to the project code according to your goals.
 4. Make sure your code has been tested and working properly.
