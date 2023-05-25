@@ -418,7 +418,7 @@
 ## Contributing
 
 - [GanaDev Com](https://ganadev.com)
-- Open Source, to contribution please read [CONTRIBUTING.md](https://github.com/deyan-ardi/laravel-layerize/blob/master/CONTRIBUTING.md))
+- Open Source, to contribution please read [CONTRIBUTING.md](https://github.com/deyan-ardi/laravel-layerize/blob/master/CONTRIBUTING.md)
 
 ## Version
 - v1.0.3
