@@ -63,12 +63,12 @@ There are no changes to the route, you can implement the route according to the 
 #### DTO/Validation
 DTO/Validation in Laravel Framework is handled by FormRequest. This package helps you create a FormRequest framework for you to validate on the user request side before going to the Controller. To create a FormRequest with Layerize, use the following command
   
-    ```php
-    php artisan layerize:dto User/StoreUserRequest
-    ```
+```php
+php artisan layerize:dto User/StoreUserRequest
+```
 The result of the above command will give a class named `StoreUserRequest` which will be added to the `App/Http/Requests/User` folder
 
-    ```php
+```php
     <?php
 
     namespace App\Http\Requests\User;
@@ -111,16 +111,16 @@ The result of the above command will give a class named `StoreUserRequest` which
             ];
         }
     }
-    ```
+```
 #### Controller
 This package helps you create a Controller framework for you to send requests to the next layer. To create a Controller with Layerize, use the following command
 
-    ```php
-    php artisan layerize:controller UserController
-    ```
+```php
+php artisan layerize:controller UserController
+```
 The result of the above command will give a class named `UserController` which will be added to the `App/Http/Controllers` folder
 
-    ```php
+```php
     <?php
 
     namespace App\Http\Controllers;
@@ -228,17 +228,17 @@ The result of the above command will give a class named `UserController` which w
         }
     }
 
-    ```
+```
 ### Business Layer
 #### Use Case
 This package helps you create a UseCase framework for you to perform business logic on your application. To create a UseCase with Layerize, use the following command
 
-    ```php
-    php artisan layerize:usecase UserUseCase
-    ```
+```php
+php artisan layerize:usecase UserUseCase
+```
 The result of the above command will give a class named `UserUseCase` which will be added to the `App/Http/UseCase` folder
 
-    ```php
+```php
     <?php
 
     namespace App\Http\UseCase;
@@ -302,14 +302,14 @@ The result of the above command will give a class named `UserUseCase` which will
         }
     }
 
-    ```
+```
 ### Persistance Layer
 #### Generate All Service Default (QueryService, DatatableService, CommandService)
 This package helps you framework all the default services for you to interact with the database layer. To make all services default with Layerize, use the following command
 
-    ```php
-    php artisan layerize:service UserPage/User --all
-    ```
+```php
+php artisan layerize:service UserPage/User --all
+```
 The result of the above command will give three class named `UserQuery`,`UserCommand`,`UserDatatable` which will be added to the `App/Services/UserPage/User` folder
 
   - `UserQuery.php`
@@ -385,13 +385,12 @@ The result of the above command will give three class named `UserQuery`,`UserCom
     ```
 #### Generate Single Service
 This package helps you framework a services for you to interact with the database layer. To make a services default with Layerize, use the following command
-
-    ```php
-    php artisan layerize:service UserPage/ApiProvider
-    ```
+```php
+php artisan layerize:service UserPage/ApiProvider    
+```
 The result of the above command will give a class named `ApiProvider` which will be added to the `App/Services/UserPage` folder
 
-    ```php
+```php
     <?php
 
     namespace App\Services\UserPage;
@@ -402,7 +401,7 @@ The result of the above command will give a class named `ApiProvider` which will
     {
         // Your custom service code here
     }
-    ```
+```
 ### Database Layer
 #### Model
 There are no changes to the model, you can implement the model according to the Laravel framework standards
@@ -447,7 +446,7 @@ class UserQuery extends Service
 
 2. Example usage
 ```php
-    $this->userQuery->firstOrFail(['id' => 5],['role'],'created_at','desc')
+$this->userQuery->firstOrFail(['id' => 5],['role'],'created_at','desc')
 ```
 ### First
 1. Default parameters
@@ -455,7 +454,7 @@ class UserQuery extends Service
 
 2. Example usage
 ```php
-    $this->userQuery->first(['id' => 5],['role'],'created_at','desc')
+$this->userQuery->first(['id' => 5],['role'],'created_at','desc')
 ```
 ### Get
 1. Default parameters
@@ -463,7 +462,7 @@ class UserQuery extends Service
 
 2. Example usage
 ```php
-    $this->userQuery->get(['role_id' => 5],['role'],'created_at','desc')
+$this->userQuery->get(['role_id' => 5],['role'],'created_at','desc')
 ```
 ### GetCount
 1. Default parameters
@@ -471,7 +470,7 @@ class UserQuery extends Service
 
 2. Example usage
 ```php
-    $this->userQuery->getCount(['role_id' => 5],['role'],'created_at','desc')
+$this->userQuery->getCount(['role_id' => 5],['role'],'created_at','desc')
 ```
 ### Paginate
 1. Default parameters
@@ -479,7 +478,7 @@ class UserQuery extends Service
 
 2. Example usage
 ```php
-    $this->userQuery->paginate(15, ['role_id' => 5],['role'],'created_at','desc')
+$this->userQuery->paginate(15, ['role_id' => 5],['role'],'created_at','desc')
 ```
 ### Pluck
 1. Default parameters
@@ -487,7 +486,7 @@ class UserQuery extends Service
 
 2. Example usage
 ```php
-    $this->userQuery->pluck("name", ['id' => 5],['role'],'created_at','desc')
+$this->userQuery->pluck("name", ['id' => 5],['role'],'created_at','desc')
 ```
 ### Chunk
 1. Default parameters
@@ -495,7 +494,7 @@ class UserQuery extends Service
 
 2. Example usage
 ```php
-    $this->userQuery->chunk(1000, function ($items) {
+$this->userQuery->chunk(1000, function ($items) {
     foreach ($items as $item) {
         // Lakukan sesuatu dengan setiap item
     }
@@ -508,7 +507,7 @@ class UserQuery extends Service
 
 2. Example usage
 ```php
-    $this->userQuery->firstOrNew(['email' => 'example@example.com'], ['name' => 'John Doe'])
+$this->userQuery->firstOrNew(['email' => 'example@example.com'], ['name' => 'John Doe'])
 ```
 ## Contributing
 
