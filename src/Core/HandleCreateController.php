@@ -9,7 +9,7 @@ class HandleCreateController
     public function getControllerPath($controllerFolderPath, $controllerName)
     {
         $controllerName = str_replace(['/', '\\'], '/', $controllerName);
-        return $controllerFolderPath . '/' . $controllerName . 'Controller.php';
+        return $controllerFolderPath . '/' . $controllerName . '.php';
     }
 
     public function createSingleControllers($controllerPath, $controllerName)
@@ -31,28 +31,16 @@ class HandleCreateController
         use Throwable;
         use App\Helpers\Json;
 
-        class ${className}Controller extends Controller
+        class ${className} extends Controller
         {
             // Controller code with example implementation
 
             public function __construct(
-                // protected ${className}UseCase ${classNameLower}UseCase,
+                // protected ${className}UseCase \$${classNameLower}UseCase,
             ){}
 
             public function index(){
-                try{
-                    // Render from use case
-
-                    // DB::beginTransaction();
-                    // \$view = \$this->${classNameLower}UseCase->renderIndex();
-                    // DB::commit();
-
-                    // return \$view;
-                }catch(Throwable \$th){
-                    // DB::rollBack();
-
-                    // return redirect()->back()->with('error', \$th->getMessage());
-                }
+                // return \$this->${classNameLower}UseCase->renderIndex();
             }
 
             public function datatable(Request \$request){
@@ -72,21 +60,10 @@ class HandleCreateController
             }
 
             public function create(){
-                try{
-                    // Render from use case
-
-                    // DB::beginTransaction();
-                    // \$view = \$this->${classNameLower}UseCase->renderCreate();
-                    // DB::commit();
-
-                    // return \$view;
-                }catch(Throwable \$th){
-                    // DB::rollBack();
-
-                    // return redirect()->back()->with('error', \$th->getMessage());
-                }
+                // return \$this->${classNameLower}UseCase->renderCreate();
             }
 
+            // Please generate Store${className}Request using layerize:dto
             public function store(Store${className}Request \$request){
                 try{
                     // Render from use case
@@ -104,21 +81,10 @@ class HandleCreateController
             }
 
             public function edit(string \$id){
-                try{
-                    // Render from use case
-
-                    // DB::beginTransaction();
-                    // \$view = \$this->${classNameLower}UseCase->renderEdit(\$id);
-                    // DB::commit();
-
-                    // return \$view;
-                }catch(Throwable \$th){
-                    // DB::rollBack();
-
-                    // return redirect()->back()->with('error', \$th->getMessage());
-                }
+                // return \$this->${classNameLower}UseCase->renderEdit(\$id);
             }
 
+            // Please generate Store${className}Request using layerize:dto
             public function update(Update${className}Request \$request, string \$id){
                 try{
                     // Render from use case

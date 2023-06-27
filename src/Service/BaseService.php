@@ -12,7 +12,8 @@ class BaseService
         $this->model = $model;
     }
 
-    public function getByAttr($with = [], $where = [], $method = 'get', $orderBy = null, $orderDirection = 'asc')
+    // To Get First Data From Model
+    public function first($where = [], $with = [], $orderBy = null, $orderDirection = 'asc')
     {
         $query = $this->model::query();
         if (!empty($with)) {
@@ -35,12 +36,181 @@ class BaseService
             $query->orderBy($orderBy, $orderDirection);
         }
 
-        if ($method === 'first') {
-            return $query->first();
-        } elseif ($method === 'fof') {
-            return $query->firstOrFail();
-        } else {
-            return $query->get();
+        return $query->first();
+    }
+
+    // To Get First Or Fail Data
+    public function firstOrFail($where = [], $with = [], $orderBy = null, $orderDirection = 'asc')
+    {
+        $query = $this->model::query();
+        if (!empty($with)) {
+            $query->with($with);
         }
+
+        if (!empty($where)) {
+            foreach ($where as $column => $condition) {
+                if (is_array($condition) && count($condition) === 2) {
+                    $operator = $condition[0];
+                    $value = $condition[1];
+                    $query->where($column, $operator, $value);
+                } else {
+                    $query->where($column, '=', $condition);
+                }
+            }
+        }
+
+        if ($orderBy !== null) {
+            $query->orderBy($orderBy, $orderDirection);
+        }
+
+        return $query->firstOrFail();
+    }
+
+    // To Get All Data
+    public function get($where = [], $with = [], $orderBy = null, $orderDirection = 'asc')
+    {
+        $query = $this->model::query();
+        if (!empty($with)) {
+            $query->with($with);
+        }
+
+        if (!empty($where)) {
+            foreach ($where as $column => $condition) {
+                if (is_array($condition) && count($condition) === 2) {
+                    $operator = $condition[0];
+                    $value = $condition[1];
+                    $query->where($column, $operator, $value);
+                } else {
+                    $query->where($column, '=', $condition);
+                }
+            }
+        }
+
+        if ($orderBy !== null) {
+            $query->orderBy($orderBy, $orderDirection);
+        }
+
+        return $query->get();
+    }
+
+    public function getCount($where = [], $with = [])
+    {
+        $query = $this->model::query();
+        if (!empty($with)) {
+            $query->with($with);
+        }
+
+        if (!empty($where)) {
+            foreach ($where as $column => $condition) {
+                if (is_array($condition) && count($condition) === 2) {
+                    $operator = $condition[0];
+                    $value = $condition[1];
+                    $query->where($column, $operator, $value);
+                } else {
+                    $query->where($column, '=', $condition);
+                }
+            }
+        }
+        return $query->count();
+    }
+
+    public function paginate($perPage = 10, $where = [], $with = [], $orderBy = null, $orderDirection = 'asc')
+    {
+        $query = $this->model::query();
+
+        if (!empty($with)) {
+            $query->with($with);
+        }
+
+        if (!empty($where)) {
+            foreach ($where as $column => $condition) {
+                if (is_array($condition) && count($condition) === 2) {
+                    $operator = $condition[0];
+                    $value = $condition[1];
+                    $query->where($column, $operator, $value);
+                } else {
+                    $query->where($column, '=', $condition);
+                }
+            }
+        }
+
+        if ($orderBy !== null) {
+            $query->orderBy($orderBy, $orderDirection);
+        }
+
+        return $query->paginate($perPage);
+    }
+
+    public function pluck($column, $where = [], $with = [], $orderBy = null, $orderDirection = 'asc')
+    {
+        $query = $this->model::query();
+
+        if (!empty($with)) {
+            $query->with($with);
+        }
+
+        if (!empty($where)) {
+            foreach ($where as $column => $condition) {
+                if (is_array($condition) && count($condition) === 2) {
+                    $operator = $condition[0];
+                    $value = $condition[1];
+                    $query->where($column, $operator, $value);
+                } else {
+                    $query->where($column, '=', $condition);
+                }
+            }
+        }
+
+        if ($orderBy !== null) {
+            $query->orderBy($orderBy, $orderDirection);
+        }
+
+        return $query->pluck($column);
+    }
+
+    public function chunk($size, $callback, $where = [], $with = [], $orderBy = null, $orderDirection = 'asc')
+    {
+        $query = $this->model::query();
+
+        if (!empty($with)) {
+            $query->with($with);
+        }
+
+        if (!empty($where)) {
+            foreach ($where as $column => $condition) {
+                if (is_array($condition) && count($condition) === 2) {
+                    $operator = $condition[0];
+                    $value = $condition[1];
+                    $query->where($column, $operator, $value);
+                } else {
+                    $query->where($column, '=', $condition);
+                }
+            }
+        }
+
+        if ($orderBy !== null) {
+            $query->orderBy($orderBy, $orderDirection);
+        }
+
+        $query->chunk($size, $callback);
+    }
+
+    public function firstOrNew($where = [], $attributes = [])
+    {
+        $query = $this->model::query();
+
+        if (!empty($where)) {
+            foreach ($where as $column => $condition) {
+                if (is_array($condition) && count($condition) === 2) {
+                    $operator = $condition[0];
+                    $value = $condition[1];
+                    $query->where($column, $operator, $value);
+                } else {
+                    $query->where($column, '=', $condition);
+                }
+            }
+        }
+
+        return $query->firstOrNew($attributes);
     }
 }
