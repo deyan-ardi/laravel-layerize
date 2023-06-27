@@ -50,7 +50,7 @@ class HandleCreateService
         $commandServiceContent = <<<EOD
         <?php
 
-        namespace App\Services\\$serviceName;
+        namespace App\Services\\$classNameSlash;
         use App\Services\Service;
 
         class ${classNameLowerEnd}CommandService extends Service
@@ -73,10 +73,10 @@ class HandleCreateService
         $datatableServiceContent = <<<EOD
         <?php
 
-        namespace App\Services\\$serviceName;
+        namespace App\Services\\$classNameSlash;
         use App\Services\Service;
         use Illuminate\Http\Request;
-        
+
         class ${classNameLowerEnd}DatatableService extends Service
         {
             // Datatable Service here
