@@ -25,15 +25,16 @@ class HandleCreateUseCase
         <?php
 
         namespace {$namespace};
-
+        use Illuminate\Http\Request;
+        
         class ${className}UseCase
         {
             // Use case code with example implementation
 
             public function __construct(
-                // protected ${className}QueryService ${classNameLower}QueryService,
-                // protected ${className}CommandService ${classNameLower}CommandService,
-                // protected ${className}DatatableService ${classNameLower}DatatableService,
+                // protected ${className}QueryService \$${classNameLower}QueryService,
+                // protected ${className}CommandService \$${classNameLower}CommandService,
+                // protected ${className}DatatableService \$${classNameLower}DatatableService,
             ){}
 
             public function renderIndex(){

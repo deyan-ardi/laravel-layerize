@@ -12,3 +12,7 @@ All notable changes to `Laravel Layerize` will be documented in this file
 
 ## 1.0.3
 - Add Readme, Contributing, and Changelog
+
+### 1.0.4
+- Fixed bug cant create service in inside folder when run php artisan layerize:service {folder}/{nameService} -a
+- Fixed example code typo

@@ -55,6 +55,13 @@ class HandleCreateDto
                     // custom message of validation
                 ];
             }
+
+            public function attributes()
+            {
+                return [
+                    // custom attributes of validation
+                ];
+            }
         }
         EOD;
 

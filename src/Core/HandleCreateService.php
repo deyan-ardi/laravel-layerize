@@ -26,14 +26,15 @@ class HandleCreateService
 
     public function createAllServices($servicePath, $serviceName)
     {
-        $classNameLower = ucwords($serviceName);
+        $classNameSlash = ucwords(str_replace(['/', '\\'], '\\', $serviceName));
+        $classNameLowerEnd = ucwords(basename($serviceName));
         $queryServiceContent = <<<EOD
         <?php
 
-        namespace App\Services\\$serviceName;
+        namespace App\Services\\$classNameSlash;
         use App\Services\Service;
 
-        class ${serviceName}QueryService extends Service
+        class ${classNameLowerEnd}QueryService extends Service
         {
             public function __construct(){
                 // self::setModel(User::class); call your model class name to use getByAttr method
@@ -52,14 +53,14 @@ class HandleCreateService
         namespace App\Services\\$serviceName;
         use App\Services\Service;
 
-        class ${serviceName}CommandService extends Service
+        class ${classNameLowerEnd}CommandService extends Service
         {
             // Command Service here
-            public function store(Store${classNameLower}Request \$request){
+            public function store(Store${classNameLowerEnd}Request \$request){
                 // Code for store data
             }
 
-            public function update(Update${classNameLower}Request \$request, string \$id){
+            public function update(Update${classNameLowerEnd}Request \$request, string \$id){
                 // Code for update data
             }
 
@@ -74,8 +75,9 @@ class HandleCreateService
 
         namespace App\Services\\$serviceName;
         use App\Services\Service;
-
-        class ${serviceName}DatatableService extends Service
+        use Illuminate\Http\Request;
+        
+        class ${classNameLowerEnd}DatatableService extends Service
         {
             // Datatable Service here
 
@@ -85,9 +87,9 @@ class HandleCreateService
         }
         EOD;
 
-        File::put($servicePath . '/' . $serviceName . 'QueryService.php', $queryServiceContent);
-        File::put($servicePath . '/' . $serviceName . 'CommandService.php', $commandServiceContent);
-        File::put($servicePath . '/' . $serviceName . 'DatatableService.php', $datatableServiceContent);
+        File::put($servicePath . '/' . $classNameLowerEnd . 'QueryService.php', $queryServiceContent);
+        File::put($servicePath . '/' . $classNameLowerEnd . 'CommandService.php', $commandServiceContent);
+        File::put($servicePath . '/' . $classNameLowerEnd . 'DatatableService.php', $datatableServiceContent);
 
         return "All general service [{$servicePath}] created successfully.";
     }

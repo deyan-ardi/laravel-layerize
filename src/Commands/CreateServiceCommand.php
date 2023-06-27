@@ -43,7 +43,12 @@ class CreateServiceCommand extends Command
         }
 
         if ($this->option('a')) {
-            $servicePath = $serviceFolderPath . '/' . $serviceName;
+            $serviceName = $this->argument('serviceName');
+
+            $serviceFolderPath = app_path('Services');
+            $servicePath = $serviceFolderPath . '/' . str_replace('/', DIRECTORY_SEPARATOR, $serviceName);
+            $parentDirectory = dirname($servicePath);
+
             if (File::exists($servicePath)) {
                 $this->line('');
                 $this->line(sprintf('<bg=red;fg=black>%s</>', ' ERROR ') . ' ' . "Service '{$serviceName}' already exists.");
@@ -51,7 +56,11 @@ class CreateServiceCommand extends Command
                 return;
             }
 
-            File::makeDirectory($servicePath);
+            if (!File::exists($parentDirectory)) {
+                File::makeDirectory($parentDirectory, 0755, true);
+            }
+
+            File::makeDirectory($servicePath, 0755, true);
 
             $generate = $handleCreateService->createAllServices($servicePath, $serviceName);
             $this->line('');

@@ -36,23 +36,12 @@ class HandleCreateController
             // Controller code with example implementation
 
             public function __construct(
-                // protected ${className}UseCase ${classNameLower}UseCase,
+                // protected ${className}UseCase \$${classNameLower}UseCase,
             ){}
 
             public function index(){
-                try{
-                    // Render from use case
-
-                    // DB::beginTransaction();
-                    // \$view = \$this->${classNameLower}UseCase->renderIndex();
-                    // DB::commit();
-
-                    // return \$view;
-                }catch(Throwable \$th){
-                    // DB::rollBack();
-
-                    // return redirect()->back()->with('error', \$th->getMessage());
-                }
+                // Render from use case
+                // return \$this->${classNameLower}UseCase->renderIndex();
             }
 
             public function datatable(Request \$request){
@@ -72,19 +61,9 @@ class HandleCreateController
             }
 
             public function create(){
-                try{
-                    // Render from use case
+                // Render from use case
 
-                    // DB::beginTransaction();
-                    // \$view = \$this->${classNameLower}UseCase->renderCreate();
-                    // DB::commit();
-
-                    // return \$view;
-                }catch(Throwable \$th){
-                    // DB::rollBack();
-
-                    // return redirect()->back()->with('error', \$th->getMessage());
-                }
+                // return \$this->${classNameLower}UseCase->renderCreate();       
             }
 
             public function store(Store${className}Request \$request){
@@ -104,19 +83,9 @@ class HandleCreateController
             }
 
             public function edit(string \$id){
-                try{
-                    // Render from use case
+                // Render from use case
 
-                    // DB::beginTransaction();
-                    // \$view = \$this->${classNameLower}UseCase->renderEdit(\$id);
-                    // DB::commit();
-
-                    // return \$view;
-                }catch(Throwable \$th){
-                    // DB::rollBack();
-
-                    // return redirect()->back()->with('error', \$th->getMessage());
-                }
+                // return \$this->${classNameLower}UseCase->renderEdit(\$id);
             }
 
             public function update(Update${className}Request \$request, string \$id){
