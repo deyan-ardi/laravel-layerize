@@ -1,6 +1,10 @@
 # Laravel Layerize - Develop Laravel App With Layer Architecture
 [![Laravel](https://img.shields.io/badge/Laravel-^7.0-red.svg)](https://laravel.com/)
 [![PHP](https://img.shields.io/badge/PHP-^7.3-blue.svg)](https://www.php.net/)
+
+:::warning
+Versi paket ini kedaluwarsa dan dukungan berakhir pada Juni 2023. Harap gunakan paket versi 2.x.x
+:::
 ## What Is Layer Architecture
 <div style="display: flex;">
   <img src="https://sv1.static.ganadev.com/deyan/layer-architecture.png" alt="Gambar" width="400px" style="margin-right: 20px;">
