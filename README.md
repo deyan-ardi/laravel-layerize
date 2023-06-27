@@ -424,7 +424,7 @@
 - Open Source, to contribution please read [CONTRIBUTING.md](https://github.com/deyan-ardi/laravel-layerize/blob/master/CONTRIBUTING.md)
 
 ## Version
-- v1.0.4
+- v1.0.5
   
 ## License
 
