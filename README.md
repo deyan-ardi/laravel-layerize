@@ -44,7 +44,7 @@
 - Open terminal, run this command
 
     ```php
-    composer require deyan-ardi/laravel-layerize
+    composer require deyan-ardi/laravel-layerize:^1.* --dev
     ```
 - After finish install, you can start use this package by run the command
   
