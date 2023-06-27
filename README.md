@@ -427,7 +427,7 @@ class UserQuery extends Service
 3. Call Query Service in Use Case
 ```php
 ...
-  class UserUseCase extends Service
+  class UserUseCase
     {
         public function __construct(
             protected UserQuery $userQuery
