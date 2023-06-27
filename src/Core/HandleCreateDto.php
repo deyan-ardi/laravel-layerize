@@ -9,7 +9,7 @@ class HandleCreateDto
     public function getDtoPath($dtoFolderPath, $dtoName)
     {
         $dtoName = str_replace(['/', '\\'], '/', $dtoName);
-        return $dtoFolderPath . '/' . $dtoName . 'Request.php';
+        return $dtoFolderPath . '/' . $dtoName . '.php';
     }
 
     public function createSingleDtos($dtoPath, $dtoName)
@@ -26,7 +26,7 @@ class HandleCreateDto
         namespace {$namespace};
         use Illuminate\Foundation\Http\FormRequest;
 
-        class ${className}Request extends FormRequest
+        class ${className} extends FormRequest
         {
             // Dto/validation with example implementation
 
@@ -53,6 +53,13 @@ class HandleCreateDto
             {
                 return [
                     // custom message of validation
+                ];
+            }
+
+            public function attributes()
+            {
+                return [
+                    // custom attributes of validation
                 ];
             }
         }

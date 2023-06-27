@@ -53,17 +53,20 @@
     ```
   
 ## How To Use (Documentation By Layer)
+### Information
+
+This package support folder generate, you can use "/" for create file in the folder (Ex: Admin/KonfigurasiController => to create class KonfigurasiController in Admin folder)
 ### Presentation Layer
-- Route
-    - There are no changes to the route, you can implement the route according to the Laravel framework standards
+#### Route
+There are no changes to the route, you can implement the route according to the Laravel framework standards
   
-- DTO/Validation
-  - DTO/Validation in Laravel Framework is handled by FormRequest. This package helps you create a FormRequest framework for you to validate on the user request side before going to the Controller. To create a FormRequest with Layerize, use the following command
+#### DTO/Validation
+DTO/Validation in Laravel Framework is handled by FormRequest. This package helps you create a FormRequest framework for you to validate on the user request side before going to the Controller. To create a FormRequest with Layerize, use the following command
   
     ```php
-    php artisan layerize:dto User/StoreUser
+    php artisan layerize:dto User/StoreUserRequest
     ```
-  - The result of the above command will give a class named `UserStorRequest` which will be added to the `App/Http/Requests/User` folder
+The result of the above command will give a class named `StoreUserRequest` which will be added to the `App/Http/Requests/User` folder
 
     ```php
     <?php
@@ -75,7 +78,6 @@
     class StoreUserRequest extends FormRequest
     {
         // Dto/validation with example implementation
-
         public function authorize()
         {
             return true;
@@ -101,16 +103,25 @@
                 // custom message of validation
             ];
         }
+
+        public function attributes()
+        {
+            return [
+                // custom attributes of validation
+            ];
+        }
     }
     ```
-- Controller
-  - This package helps you create a Controller framework for you to send requests to the next layer. To create a Controller with Layerize, use the following command
+#### Controller
+This package helps you create a Controller framework for you to send requests to the next layer. To create a Controller with Layerize, use the following command
+
     ```php
-    php artisan layerize:controller User
+    php artisan layerize:controller UserController
     ```
-  - The result of the above command will give a class named `UserController` which will be added to the `App/Http/Controllers` folder
+The result of the above command will give a class named `UserController` which will be added to the `App/Http/Controllers` folder
+
     ```php
-        <?php
+    <?php
 
     namespace App\Http\Controllers;
 
@@ -124,25 +135,14 @@
         // Controller code with example implementation
 
         public function __construct(
-            // protected UserUseCase UserUseCase,
+            // protected UserUseCase $userUseCase,
         ) {
         }
 
         public function index()
         {
-            try {
-                // Render from use case
-
-                // DB::beginTransaction();
-                // $view = $this->UserUseCase->renderIndex();
-                // DB::commit();
-
-                // return $view;
-            } catch(Throwable $th) {
-                // DB::rollBack();
-
-                // return redirect()->back()->with('error', $th->getMessage());
-            }
+            // Render from use case
+            // return $this->userUseCase->renderIndex();
         }
 
         public function datatable(Request $request)
@@ -151,7 +151,7 @@
                 // Render from use case
 
                 // DB::beginTransaction();
-                // $datatable = $this->UserUseCase->renderDatatable($request);
+                // $datatable = $this->userUseCase->renderDatatable($request);
                 // DB::commit();
 
                 // return $datatable;
@@ -164,28 +164,18 @@
 
         public function create()
         {
-            try {
-                // Render from use case
-
-                // DB::beginTransaction();
-                // $view = $this->UserUseCase->renderCreate();
-                // DB::commit();
-
-                // return $view;
-            } catch(Throwable $th) {
-                // DB::rollBack();
-
-                // return redirect()->back()->with('error', $th->getMessage());
-            }
+            // Render from use case
+            // return $this->userUseCase->renderCreate();
         }
 
+        // StoreUserRequest can be generate using layerize:dto
         public function store(StoreUserRequest $request)
         {
             try {
                 // Render from use case
 
                 // DB::beginTransaction();
-                // $this->UserUseCase->execStore($request);
+                // $this->userUseCase->execStore($request);
                 // DB::commit();
 
                 // return redirect()->back()->with('success', "Data Successfully Added");
@@ -198,28 +188,18 @@
 
         public function edit(string $id)
         {
-            try {
-                // Render from use case
-
-                // DB::beginTransaction();
-                // $view = $this->UserUseCase->renderEdit($id);
-                // DB::commit();
-
-                // return $view;
-            } catch(Throwable $th) {
-                // DB::rollBack();
-
-                // return redirect()->back()->with('error', $th->getMessage());
-            }
+            // Render from use case
+            // return $this->userUseCase->renderEdit($id);
         }
 
+        // UpdateUserRequest can be generate using layerize:dto
         public function update(UpdateUserRequest $request, string $id)
         {
             try {
                 // Render from use case
 
                 // DB::beginTransaction();
-                // $this->UserUseCase->execUpdate($request, $id);
+                // $this->userUseCase->execUpdate($request, $id);
                 // DB::commit();
 
                 // return redirect()->back()->with('success', "Data Successfully Updated");
@@ -236,7 +216,7 @@
                 // Render from use case
 
                 // DB::beginTransaction();
-                // $this->UserUseCase->execDelete($request);
+                // $this->userUseCase->execDelete($request);
                 // DB::commit();
 
                 // return redirect()->back()->with('success', "Data Successfully Delete");
@@ -250,25 +230,29 @@
 
     ```
 ### Business Layer
-- Use Case
-  - This package helps you create a UseCase framework for you to perform business logic on your application. To create a UseCase with Layerize, use the following command
+#### Use Case
+This package helps you create a UseCase framework for you to perform business logic on your application. To create a UseCase with Layerize, use the following command
+
     ```php
-    php artisan layerize:usecase User
+    php artisan layerize:usecase UserUseCase
     ```
-  - The result of the above command will give a class named `UserUseCase` which will be added to the `App/Http/UseCase` folder
+The result of the above command will give a class named `UserUseCase` which will be added to the `App/Http/UseCase` folder
+
     ```php
     <?php
 
     namespace App\Http\UseCase;
+    
+    use Illuminate\Http\Request;
 
     class UserUseCase
     {
         // Use case code with example implementation
 
         public function __construct(
-            // protected UserQueryService UserQueryService,
-            // protected UserCommandService UserCommandService,
-            // protected UserDatatableService UserDatatableService,
+            // protected UserQuery $userQuery,
+            // protected UserCommand $userCommand,
+            // protected UserDatatable $userDatatable,
         ) {
         }
 
@@ -281,7 +265,7 @@
         public function renderDatatable(Request $request)
         {
             // render datatable
-            // return $this->UserDatatableService->datatable($request);
+            // return $this->userDatatable->datatable($request);
         }
 
         public function renderCreate()
@@ -290,53 +274,57 @@
             // return view('create');
         }
 
+        // StoreUserRequest can be generate using layerize:dto, but must same with request send by controller
         public function execStore(StoreUserRequest $request)
         {
             // exec store data
-            // return $this->UserCommandService->store($request),
+            // return $this->userCommand->store($request),
         }
 
         public function renderEdit(string $id)
         {
             // render view create
-            // $findId = $this->UserQueryService->getByAttr([],['id' => $id],'first);
+            // $findId = $this->userQuery->firstOrFail(['id' => $id]);
             // return view('edit', compact('findId'));
         }
 
+        // UpdateUserRequest can be generate using layerize:dto, but must same with request send by controller
         public function execUpdate(UpdateUserRequest $request, string $id)
         {
             // exec store data
-            // return $this->UserCommandService->update($request, $id),
+            // return $this->userCommand->update($request, $id),
         }
 
         public function execDelete(string $id)
         {
             // exec store data
-            // return $this->UserCommandService->delete($id),
+            // return $this->userCommand->delete($id),
         }
     }
 
     ```
 ### Persistance Layer
-- Generate All Service Default (QueryService, DatatableService, CommandService)
-  - This package helps you framework all the default services for you to interact with the database layer. To make all services default with Layerize, use the following command
+#### Generate All Service Default (QueryService, DatatableService, CommandService)
+This package helps you framework all the default services for you to interact with the database layer. To make all services default with Layerize, use the following command
+
     ```php
-    php artisan layerize:service User -a
+    php artisan layerize:service UserPage/User --all
     ```
-  - The result of the above command will give three class named `UserQueryService`,`UserCommandService`,`UserDatatableService` which will be added to the `App/Services/User` folder
-  - `UserQueryService.php`
+The result of the above command will give three class named `UserQuery`,`UserCommand`,`UserDatatable` which will be added to the `App/Services/UserPage/User` folder
+
+  - `UserQuery.php`
     ```php
     <?php
 
-    namespace App\Services\User;
+    namespace App\Services\UserPage\User;
 
     use App\Services\Service;
 
-    class UserQueryService extends Service
+    class UserQuery extends Service
     {
         public function __construct()
         {
-            // self::setModel(User::class); call your model class name to use getByAttr method
+            // self::setModel(User::class); call your model class name to use general function list
         }
 
         // Other Query Service here
@@ -347,22 +335,24 @@
     }
 
     ```
-  - `UserCommandService.php`
+  - `UserCommand.php`
     ```php
     <?php
 
-    namespace App\Services\User;
+    namespace App\Services\UserPage\User;
 
     use App\Services\Service;
 
-    class UserCommandService extends Service
+    class UserCommand extends Service
     {
         // Command Service here
+        // StoreUserRequest can be generate by layerize:dto, but must same with request send by UseCase
         public function store(StoreUserRequest $request)
         {
             // Code for store data
         }
 
+        // UpdateUserRequest can be generate by layerize:dto, but must same with request send by UseCase
         public function update(UpdateUserRequest $request, string $id)
         {
             // Code for update data
@@ -375,18 +365,17 @@
     }
 
     ```
-  - `UserDatatableService.php`
+  - `UserDatatable.php`
     ```php
     <?php
 
-    namespace App\Services\DraftPembelianOpr;
+    namespace App\Services\UserPage\User;
 
     use App\Services\Service;
 
-    class DraftPembelianOprDatatableService extends Service
+    class UserDatatable extends Service
     {
         // Datatable Service here
-
         public function datatable(Request $request)
         {
             // Datatable server side processing code here
@@ -394,34 +383,140 @@
     }
 
     ```
-- Generate Single Service
-  - This package helps you framework a services for you to interact with the database layer. To make a services default with Layerize, use the following command
+#### Generate Single Service
+This package helps you framework a services for you to interact with the database layer. To make a services default with Layerize, use the following command
+
     ```php
-    php artisan layerize:service Custom
+    php artisan layerize:service UserPage/ApiProvider
     ```
-  - The result of the above command will give a class named `CustomeService` which will be added to the `App/Services` folder
+The result of the above command will give a class named `ApiProvider` which will be added to the `App/Services/UserPage` folder
+
     ```php
     <?php
 
-    namespace App\Services;
+    namespace App\Services\UserPage;
+
     use App\Services\Service;
 
-    class CustomService extends Service
+    class ApiProvider extends Service
     {
-        // Your service code here
+        // Your custom service code here
     }
     ```
 ### Database Layer
-- Model
-  - There are no changes to the model, you can implement the model according to the Laravel framework standards
+#### Model
+There are no changes to the model, you can implement the model according to the Laravel framework standards
 
+## General Query Service Function
+By configuring the Query Service, we provide some simple custom functions that can be used in Use Case to speed up the process of querying the database
+
+### Configuration
+1. Create Query Service
+2. Add Model name in __construction Query Service Class
+```php
+...
+class UserQuery extends Service
+    {
+        public function __construct()
+        {
+            self::setModel(User::class); // add like this
+        }
+
+        ...
+    }
+```
+3. Call Query Service in Use Case
+```php
+...
+  class UserUseCase extends Service
+    {
+        public function __construct(
+            protected UserQuery $userQuery
+        )
+        {
+            
+        }
+
+        ...
+    }
+``` 
+4. One Query Service only can integrate with One Model, you can make many Query Service instances of Service
+### FirstOrFail
+1. Default parameters
+`firstOrFail($where = [], $with = [], $orderBy = null, $orderDirection = 'asc')`
+
+2. Example usage
+```php
+    $this->userQuery->firstOrFail(['id' => 5],['role'],'created_at','desc')
+```
+### First
+1. Default parameters
+`first($where = [], $with = [], $orderBy = null, $orderDirection = 'asc')`
+
+2. Example usage
+```php
+    $this->userQuery->first(['id' => 5],['role'],'created_at','desc')
+```
+### Get
+1. Default parameters
+`get($where = [], $with = [], $orderBy = null, $orderDirection = 'asc')`
+
+2. Example usage
+```php
+    $this->userQuery->get(['role_id' => 5],['role'],'created_at','desc')
+```
+### GetCount
+1. Default parameters
+`getCount($where = [], $with = [], $orderBy = null, $orderDirection = 'asc')`
+
+2. Example usage
+```php
+    $this->userQuery->getCount(['role_id' => 5],['role'],'created_at','desc')
+```
+### Paginate
+1. Default parameters
+`paginate($perPage = 10, $where = [], $with = [], $orderBy = null, $orderDirection = 'asc')`
+
+2. Example usage
+```php
+    $this->userQuery->paginate(15, ['role_id' => 5],['role'],'created_at','desc')
+```
+### Pluck
+1. Default parameters
+`pluck($column, $where = [], $with = [], $orderBy = null, $orderDirection = 'asc')`
+
+2. Example usage
+```php
+    $this->userQuery->pluck("name", ['id' => 5],['role'],'created_at','desc')
+```
+### Chunk
+1. Default parameters
+`chunk($size, $callback, $where = [], $with = [], $orderBy = null, $orderDirection = 'asc')`
+
+2. Example usage
+```php
+    $this->userQuery->chunk(1000, function ($items) {
+    foreach ($items as $item) {
+        // Lakukan sesuatu dengan setiap item
+    }
+}, ['category' => 'books'], ['author'], 'title', 'desc');
+
+```
+### First Or New
+1. Default parameters
+`firstOrNew($where = [], $attributes = [])`
+
+2. Example usage
+```php
+    $this->userQuery->firstOrNew(['email' => 'example@example.com'], ['name' => 'John Doe'])
+```
 ## Contributing
 
 - [GanaDev Com](https://ganadev.com)
 - Open Source, to contribution please read [CONTRIBUTING.md](https://github.com/deyan-ardi/laravel-layerize/blob/master/CONTRIBUTING.md)
 
 ## Version
-- v1.0.3
+- v2.0.0
   
 ## License
 

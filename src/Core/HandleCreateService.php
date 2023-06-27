@@ -26,17 +26,18 @@ class HandleCreateService
 
     public function createAllServices($servicePath, $serviceName)
     {
-        $classNameLower = ucwords($serviceName);
+        $classNameSlash = ucwords(str_replace(['/', '\\'], '\\', $serviceName));
+        $classNameLowerEnd = ucwords(basename($serviceName));
         $queryServiceContent = <<<EOD
         <?php
 
-        namespace App\Services\\$serviceName;
+        namespace App\Services\\$classNameSlash;
         use App\Services\Service;
 
-        class ${serviceName}QueryService extends Service
+        class ${classNameLowerEnd}Query extends Service
         {
             public function __construct(){
-                // self::setModel(User::class); call your model class name to use getByAttr method
+                // self::setModel(User::class); call your model class name to use General Service Function
             }
 
             // Other Query Service here
@@ -49,17 +50,19 @@ class HandleCreateService
         $commandServiceContent = <<<EOD
         <?php
 
-        namespace App\Services\\$serviceName;
+        namespace App\Services\\$classNameSlash;
         use App\Services\Service;
 
-        class ${serviceName}CommandService extends Service
+        class ${classNameLowerEnd}Command extends Service
         {
             // Command Service here
-            public function store(Store${classNameLower}Request \$request){
+            // Please generate Store${classNameLowerEnd}Request using layerize:dto, must be same with request send by useCase
+            public function store(Store${classNameLowerEnd}Request \$request){
                 // Code for store data
             }
 
-            public function update(Update${classNameLower}Request \$request, string \$id){
+            // Please generate Store${classNameLowerEnd}Request using layerize:dto, must be same with request send by useCase
+            public function update(Update${classNameLowerEnd}Request \$request, string \$id){
                 // Code for update data
             }
 
@@ -72,22 +75,22 @@ class HandleCreateService
         $datatableServiceContent = <<<EOD
         <?php
 
-        namespace App\Services\\$serviceName;
+        namespace App\Services\\$classNameSlash;
         use App\Services\Service;
+        use Illuminate\Http\Request;
 
-        class ${serviceName}DatatableService extends Service
+        class ${classNameLowerEnd}Datatable extends Service
         {
             // Datatable Service here
-
             public function datatable(Request \$request){
                 // Datatable server side processing code here
             }
         }
         EOD;
 
-        File::put($servicePath . '/' . $serviceName . 'QueryService.php', $queryServiceContent);
-        File::put($servicePath . '/' . $serviceName . 'CommandService.php', $commandServiceContent);
-        File::put($servicePath . '/' . $serviceName . 'DatatableService.php', $datatableServiceContent);
+        File::put($servicePath . '/' . $classNameLowerEnd . 'Query.php', $queryServiceContent);
+        File::put($servicePath . '/' . $classNameLowerEnd . 'Command.php', $commandServiceContent);
+        File::put($servicePath . '/' . $classNameLowerEnd . 'Datatable.php', $datatableServiceContent);
 
         return "All general service [{$servicePath}] created successfully.";
     }
@@ -95,7 +98,7 @@ class HandleCreateService
     public function getServicePath($serviceFolderPath, $serviceName)
     {
         $serviceName = str_replace(['/', '\\'], '/', $serviceName);
-        return $serviceFolderPath . '/' . $serviceName . 'Service.php';
+        return $serviceFolderPath . '/' . $serviceName . '.php';
     }
 
     public function createSingleServices($servicePath, $serviceName)
@@ -112,7 +115,7 @@ class HandleCreateService
         namespace {$namespace};
         use App\Services\Service;
 
-        class ${className}Service extends Service
+        class ${className} extends Service
         {
             // Your service code here
         }

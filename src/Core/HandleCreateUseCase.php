@@ -9,7 +9,7 @@ class HandleCreateUseCase
     public function getuseCasePath($useCaseFolderPath, $usecaseName)
     {
         $usecaseName = str_replace(['/', '\\'], '/', $usecaseName);
-        return $useCaseFolderPath . '/' . $usecaseName . 'UseCase.php';
+        return $useCaseFolderPath . '/' . $usecaseName . '.php';
     }
 
     public function createSingleUseCases($useCasePath, $usecaseName)
@@ -25,15 +25,16 @@ class HandleCreateUseCase
         <?php
 
         namespace {$namespace};
+        use Illuminate\Http\Request;
 
-        class ${className}UseCase
+        class ${className}
         {
             // Use case code with example implementation
 
             public function __construct(
-                // protected ${className}QueryService ${classNameLower}QueryService,
-                // protected ${className}CommandService ${classNameLower}CommandService,
-                // protected ${className}DatatableService ${classNameLower}DatatableService,
+                // protected ${className}Query \$${classNameLower}Query,
+                // protected ${className}Command \$${classNameLower}Command,
+                // protected ${className}Datatable \$${classNameLower}Datatable,
             ){}
 
             public function renderIndex(){
@@ -43,7 +44,7 @@ class HandleCreateUseCase
 
             public function renderDatatable(Request \$request){
                 // render datatable
-                // return \$this->${classNameLower}DatatableService->datatable(\$request);
+                // return \$this->${classNameLower}Datatable->datatable(\$request);
             }
 
             public function renderCreate(){
@@ -51,25 +52,27 @@ class HandleCreateUseCase
                 // return view('create');
             }
 
+            // Please generate Store${className}Request using layerize:dto, must be same with request send by controller
             public function execStore(Store${className}Request \$request){
                 // exec store data
-                // return \$this->${classNameLower}CommandService->store(\$request),
+                // return \$this->${classNameLower}Command->store(\$request),
             }
 
             public function renderEdit(string \$id){
-                // render view create
-                // \$findId = \$this->${classNameLower}QueryService->getByAttr([],['id' => \$id],'first);
+                // render view edit, general query can be use when activate Query service __construct
+                // \$findId = \$this->${classNameLower}Query->findOrFail(['id' => \$id]);
                 // return view('edit', compact('findId'));
             }
 
+            // Please generate Store${className}Request using layerize:dto, must be same with request send by controller
             public function execUpdate(Update${className}Request \$request, string \$id){
                 // exec store data
-                // return \$this->${classNameLower}CommandService->update(\$request, \$id),
+                // return \$this->${classNameLower}Command->update(\$request, \$id),
             }
 
             public function execDelete(string \$id){
                 // exec store data
-                // return \$this->${classNameLower}CommandService->delete(\$id),
+                // return \$this->${classNameLower}Command->delete(\$id),
             }
         }
         EOD;
